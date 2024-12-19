@@ -1,0 +1,2736 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "description": " Zeal App Backend API - Node.js + Express",
+    "version": "1.0.0",
+    "title": "Zeal Fitness App",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": { "email": "riskdynamix@bimass.com" }
+  },
+  "basePath": "/api",
+  "servers": [
+    {
+      "url": "http://localhost:3000/api",
+      "description": "Local development servers"
+    },
+    {
+      "url": "https://zeal-server-d0353a904474.herokuapp.com/api",
+      "description": "Heroku server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Auth routes API's for zeal fitness app"
+    },
+    {
+      "name": "User",
+      "description": "User/Home routes API's for zeal fitness app"
+    },
+    {
+      "name": "Follow",
+      "description": "Follow routes API's for zeal fitness app"
+    },
+    {
+      "name": "Post",
+      "description": "Post routes API's for zeal fitness app"
+    },
+    {
+      "name": "Comment",
+      "description": "Comment routes API's for zeal fitness app"
+    },
+    {
+      "name": "Group",
+      "description": "Groups routes API's for zeal fitness app"
+    },
+    {
+      "name": "Challenge",
+      "description": "Challenge routes API's for zeal fitness app"
+    },
+    {
+      "name": "Exercise",
+      "description": "Exercise routes API's for zeal fitness app"
+    },
+    {
+      "name": "Badge",
+      "description": "Badge routes API's for zeal fitness app"
+    },
+    {
+      "name": "Progress",
+      "description": "Progress routes API's for zeal fitness app"
+    },
+    {
+      "name": "Desktop",
+      "description": "Desktop routes API's for zeal fitness app"
+    }
+  ],
+  "schemes": ["https", "http"],
+  "paths": {
+    "/auth/get-code": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "get-code",
+        "description": "This endpoint allows you to get code for account verification",
+        "operationId": "get-code",
+        "produces": ["application/json", "application/xml"],
+        "requestBody": {
+          "description": "Feilds for getting code",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email":{"type": "string","description": "your email here"}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/auth/verify-account": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "verify code",
+        "description": "This endpoint allows you verify the code sent to you in your provided email.",
+        "operationId": "verify",
+        "produces": ["application/json", "application/xml"],
+        "requestBody": {
+          "description": "Feilds for verifying code",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email":{"type": "string","description": "your email here"},
+                  "code":{"type": "string","description": "your code here"}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/auth/sign-up": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Register user",
+        "description": "This is going to be .",
+        "operationId": "createUser",
+        "consumes": ["application/json"],
+        "produces": ["application/json", "application/xml"],
+        "requestBody": {
+          "description": "Created User object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Zeal"
+              }
+            }
+          }
+        },
+        "responses": { "default": { "description": "successful operation" } }
+      }
+    },
+    "/auth/sign-in": {
+      "post": {
+        "tags": ["Auth", "Desktop"],
+        "summary": "Logs user into the system",
+        "description": "",
+        "operationId": "loginUser",
+        "consumes": ["application/json"],
+        "produces": ["application/json", "application/xml"],
+        "requestBody": {
+          "description": "login User",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/ZealLogin"
+              }
+            }
+          }
+        },
+        "responses": { "default": { "description": "successful operation" } }
+      }
+    },
+    "/auth/sign-out": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Logout user",
+        "description": "This is going to be log out.",
+        "operationId": "LogoutUser",
+        "consumes": ["application/json"],
+        "produces": ["application/json", "application/xml"],
+        "requestBody": {
+          "description": "Feilds for Add Card Method",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "refreshToken":{"type": "string","description": "rf token."}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/auth/forgot-password": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Forgot Password",
+        "description": "This endpoint allows you to reset your password.",
+        "operationId": "forgotPassword",
+        "produces": ["application/json", "application/xml"],
+        "requestBody": {
+          "description": "Feilds for Reseting password",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email":{"type": "string","description": "your email here"}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/auth/verify": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "verify forgot password code",
+        "description": "This endpoint allows you verify the code sent to you in your provided email.",
+        "operationId": "verifyForgotPasswordCode",
+        "produces": ["application/json", "application/xml"],
+        "requestBody": {
+          "description": "Feilds for verifying code",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email":{"type": "string","description": "your email here"},
+                  "code":{"type": "string","description": "your code here"}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/auth/forgot-password-update": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "forgot password update",
+        "description": "This endpoint allows you to change the password",
+        "operationId": "forgotPasswordUpdate",
+        "produces": ["application/json", "application/xml"],
+        "requestBody": {
+          "description": "Feilds for Updating Password",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email":{"type": "string","description": "your email here"},
+                  "newPassword":{"type": "string","description": "new password here"}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/auth/change-password": {
+      "put": {
+        "tags": ["Auth"],
+        "summary": "Update password",
+        "description": "update your password",
+        "operationId": "updatepPassword",
+        "consumes": ["application/json"],
+        "produces": ["application/json", "application/xml"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the user",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Feilds for updating password",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  
+                }
+              }
+            }
+          }
+        },
+        "responses": { "default": { "description": "successful operation" } },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/user/profile": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get the user profile",
+        "description": "",
+        "operationId": "profileUser",
+        "produces": ["application/json", "application/xml"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the user",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": { "description": "Invalid username/password supplied" }
+        },
+        "security": [{ "BearerAuth": [] }]
+      }
+    },
+
+    "/user/users": {
+      "get": {
+        "tags": ["User"],
+        "summary": "User List",
+        "description": "This endpoint allows for the listing of users.",
+        "operationId": "UserList",
+        "produces": ["application/json", "application/xml"],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number of the users list",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "limit of data",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+         
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Query string for searching Users",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/user/profile-update": {
+      "put": {
+        "tags": ["User"],
+        "summary": "Update profile",
+        "description": "update your profile",
+        "operationId": "updateProfile",
+        "consumes": ["application/json"],
+        "produces": ["application/json", "application/xml"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the user",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Feilds for updating user",
+          "required": true,
+          "content": {
+
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "file",
+                    "format": "binary",
+                    "description": "The file to upload."
+                  },
+                  "body": {
+                    "type": "string",
+                    "items": {
+                      "type": "object"
+                    },
+                    "description": "Data including groupNmae, level, age etc."
+                  }
+                },
+                "required": []
+              }
+            }
+         
+          }
+        },
+        "responses": { "default": { "description": "successful operation" } },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/auth/auth/google": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "login from google",
+        "description": "",
+        "operationId": "google login",
+        "produces": ["application/json", "application/xml"],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": { "description": "Invalid username/password supplied" }
+        },
+        "security": [{ "BearerAuth": [] }]
+      }
+    },
+    "/auth/auth/google/callback": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "login from google popup",
+        "description": "",
+        "operationId": "google login popup",
+        "produces": ["application/json", "application/xml"],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": { "description": "Invalid username/password supplied" }
+        },
+        "security": [{ "BearerAuth": [] }]
+      }
+    },
+    "/group/group": {
+      "post": {
+        "tags": ["Group"],
+        "summary": "create new group",
+        "description": "This endpoint allows for the creation of new group.",
+        "operationId": "createGroup",
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json", "application/xml"],
+        "requestBody": {
+          "description": "Create group data",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "file",
+                    "format": "binary",
+                    "description": "The file to upload."
+                  },
+                  "body": {
+                    "type": "string",
+                    "items": {
+                      "type": "object"
+                    },
+                    "description": "Data including groupName, age, description, level etc."
+                  }
+                },
+                "required": ["body"]
+              }
+            }
+          }
+        },
+        "responses": { "default": { "description": "successful operation" } },
+        "security": [{ "BearerAuth": [] }]
+      }
+    },
+    "/group/join-group": {
+      "post": {
+        "tags": ["Group"],
+        "summary": "join group",
+        "description": "This endpoint allows you join the group.",
+        "operationId": "joinGroup",
+        "produces": ["application/json", "application/xml"],
+        "requestBody": {
+          "description": "Feilds for joining Groups",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "groupId":{"type": "string","description": "group Id"},
+                  "newMemberId":{"type": "string","description": "new memeber Id"}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/group/leave-group": {
+      "post": {
+        "tags": ["Group"],
+        "summary": "leave group",
+        "description": "This endpoint allows you leave the group.",
+        "operationId": "leaveGroup",
+        "produces": ["application/json", "application/xml"],
+        "requestBody": {
+          "description": "Feilds for leaving Groups",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "groupId":{"type": "string","description": "group Id"},
+                  "memberId":{"type": "string","description": "new memeber Id"}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/group/group/search": {
+      "get": {
+        "tags": ["Group"],
+        "summary": "Groups List",
+        "description": "This endpoint allows for the listing of groups based on certain filters.",
+        "operationId": "groupsList",
+        "produces": ["application/json", "application/xml"],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number of the groups list",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "limit of data",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+         
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Query string for searching groups",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/group/group-details": {
+      "get": {
+        "tags": ["Group"],
+        "summary": "Group Details",
+        "description": "This endpoint allows for the listing of groups based on certain filters.",
+        "operationId": "groupDetails",
+        "produces": ["application/json", "application/xml"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the group",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/group/group-update": {
+      "put": {
+        "tags": ["Group"],
+        "summary": "Update group",
+        "description": "This endpoint allows for the Update of group.",
+        "operationId": "groupUpdate",
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json", "application/xml"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the group",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Update group data",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "file",
+                    "format": "binary",
+                    "description": "The file to upload."
+                  },
+                  "body": {
+                    "type": "string",
+                    "items": {
+                      "type": "object"
+                    },
+                    "description": "Data including groupNmae, level, age etc."
+                  }
+                },
+                "required": ["body"]
+              }
+            }
+          }
+        },
+        "responses": { "default": { "description": "successful operation" } },
+        "security": [{ "BearerAuth": [] }]
+      }
+    },
+    "/group/group-members": {
+      "post": {
+        "tags": ["Group"],
+        "summary": "group members List",
+        "description": "This endpoint allows for the listing of group members based on certain filters.",
+        "operationId": "group members",
+        "produces": ["application/json", "application/xml"],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number of the group members list",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "groupId",
+            "in": "query",
+            "description": "Page number of the group members list",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Query string for searching group members",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }, {
+            "name": "limit",
+            "in": "query",
+            "description": "limit of data",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "group members list body.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "array",
+                    "description": "The status of the cars."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/group/delete-group": {
+      "delete": {
+        "tags": ["Group"],
+        "summary": "deleteGroup",
+        "description": "This endpoint allows to delete Group.",
+        "operationId": "deleteGroup",
+        "produces": ["application/json", "application/xml"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the Group",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        ],
+        
+        "responses": { "default": { "description": "successful operation" } },
+        "security": [{ "BearerAuth": [] }]
+      }
+    },
+  "/post/create-post": {
+  "post": {
+    "tags": ["Post"],
+    "summary": "Create new post",
+    "description": "This endpoint allows for the creation of new post.",
+    "operationId": "createPost",
+    "consumes": ["multipart/form-data"],
+    "produces": ["application/json"],
+    "requestBody": {
+      "description": "Fields for creating post",
+      "required": true,
+      "content": {
+        "multipart/form-data": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "files": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "format": "binary"
+                },
+                "description": "The files to upload."
+              },
+              "description": {
+                "type": "string",
+                "description": "Description of the post"
+              },
+              "postOwner": {
+                "type": "string",
+                "description": "Post Owner ID",
+                "example": "60b6a23d8f1c4e3d1c8b4567"
+              },
+              "group": {
+                "type": "string",
+                "description": "Group ID",
+                "example": "6669a3448932aa1ea18af76a"
+              }
+           
+            },
+            "required": ["description", "postOwner"]
+          }
+        }
+      }
+    },
+    "responses": {
+      "default": {
+        "description": "Successful operation"
+      }
+    },
+    "security": [
+      {
+        "BearerAuth": []
+      }
+    ]
+  }
+},
+"/post/user-posts": {
+  "get": {
+    "tags": ["Post"],
+    "summary": "user Posts",
+    "description": "This endpoint allows for the listing of user post.",
+    "operationId": "userposts",
+    "produces": ["application/json", "application/xml"],
+    "parameters": [
+      {
+        "name": "id",
+        "in": "query",
+        "description": "Id of the user",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "format": "string"
+        }
+      },
+      {
+        "name": "skip",
+        "in": "query",
+        "description": "skip amount of data in numbers",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "format": "string"
+        }
+      }
+    ],
+    "responses": {
+      "default": {
+        "description": "successful operation"
+      }
+    },
+    "security": [
+      {
+        "BearerAuth": []
+      }
+    ]
+  }
+},
+"/post/update-post": {
+  "put": {
+    "tags": ["Post"],
+    "summary": "Update post",
+    "description": "This endpoint allows for the update of a post.",
+    "operationId": "postUpdate",
+    "consumes": ["multipart/form-data"],
+    "produces": ["application/json"],
+    "parameters": [
+      {
+        "name": "id",
+        "in": "query",
+        "description": "Id of the Post",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "description": "Fields for updating Post",
+      "required": true,
+      "content": {
+        "multipart/form-data": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "files": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "format": "binary"
+                },
+                "description": "The files to upload."
+              },
+              "description": {
+                "type": "string",
+                "description": "Description of the post"
+              }
+           
+            },
+            "required": []
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "successful operation"
+      },
+      "400": {
+        "description": "Invalid input"
+      }
+    },
+    "security": [
+      {
+        "BearerAuth": []
+      }
+    ]
+  }
+},
+    "/post/post-details": {
+      "get": {
+        "tags": ["Post"],
+        "summary": "Post Details",
+        "description": "This endpoint allows for the details of post.",
+        "operationId": "PostDetails",
+        "produces": ["application/json", "application/xml"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the post",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/post/delete-post": {
+      "delete": {
+        "tags": ["Post"],
+        "summary": "deletePost",
+        "description": "This endpoint allows to delete Post.",
+        "operationId": "deletePost",
+        "produces": ["application/json", "application/xml"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the post",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        ],
+        
+        "responses": { "default": { "description": "successful operation" } },
+        "security": [{ "BearerAuth": [] }]
+      }
+    },
+    "/post/group-posts": {
+      "get": {
+        "tags": ["Post"],
+        "summary": "group Posts",
+        "description": "This endpoint allows for the listing of group post.",
+        "operationId": "groupposts",
+        "produces": ["application/json", "application/xml"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the group",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "skip amount of data in numbers",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/post/all-posts": {
+      "get": {
+        "tags": ["Post"],
+        "summary": "all Posts",
+        "description": "This endpoint allows for the listing of all post.",
+        "operationId": "allposts",
+        "produces": ["application/json", "application/xml"],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "userId of the post",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "skip amount of data in numbers",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/post/like-post": {
+      "post": {
+        "tags": ["Post"],
+        "summary": "like post",
+        "description": "This endpoint allows for the post like.",
+        "operationId": "LikePost",
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json", "application/xml"],
+        "requestBody": {
+          "description": "Feilds for liking post",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  
+                }
+              }
+            }
+          }
+        },
+        "responses": { "default": { "description": "successful operation" } },
+        "security": [{ "BearerAuth": [] }]
+      }
+    },
+    "/post/dislike-post": {
+      "post": {
+        "tags": ["Post"],
+        "summary": "dislike post",
+        "description": "This endpoint allows for the post dislike.",
+        "operationId": "disLikePost",
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json", "application/xml"],
+        "requestBody": {
+          "description": "Feilds for disliking post",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  
+                }
+              }
+            }
+          }
+        },
+        "responses": { "default": { "description": "successful operation" } },
+        "security": [{ "BearerAuth": [] }]
+      }
+    },
+    "/comment/post/comments": {
+      "post": {
+        "tags": ["Comment"],
+        "summary": "add a comment",
+        "description": "This endpoint allows for adding comment.",
+        "operationId": "addComment",
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json", "application/xml"],
+        "requestBody": {
+          "description": "Feilds for adding comment",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  
+                }
+              }
+            }
+          }
+        },
+        "responses": { "default": { "description": "successful operation" } },
+        "security": [{ "BearerAuth": [] }]
+      }
+    },
+    "/comment/post/update-comments": {
+      "put": {
+        "tags": ["Comment"],
+        "summary": "Update comment",
+        "description": "This endpoint allows for the Update of comment.",
+        "operationId": "commentUpdate",
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json", "application/xml"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the comment",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Feilds for updating comment",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  
+                }
+              }
+            }
+          }
+        },
+        "responses": { "default": { "description": "successful operation" } },
+        "security": [{ "BearerAuth": [] }]
+      }
+    },
+    "/comment/post/get-all-comments": {
+      "get": {
+        "tags": ["Comment"],
+        "summary": "All comments",
+        "description": "This endpoint allows for the listing of all comments o f a post.",
+        "operationId": "allComments",
+        "produces": ["application/json", "application/xml"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the post",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/comment/delete-comment": {
+      "delete": {
+        "tags": ["Comment"],
+        "summary": "deleteComment",
+        "description": "This endpoint allows to delete comment.",
+        "operationId": "deleteComment",
+        "produces": ["application/json", "application/xml"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the Comment",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        ],
+        
+        "responses": { "default": { "description": "successful operation" } },
+        "security": [{ "BearerAuth": [] }]
+      }
+    },
+    "/follow/follow": {
+      "post": {
+        "tags": ["Follow"],
+        "summary": "follow a user",
+        "description": "This endpoint allows to follow other users.",
+        "operationId": "followUser",
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json", "application/xml"],
+        "requestBody": {
+          "description": "Feilds for following User",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "followedId":{"type": "string","description": "id of the person to be followed"},
+                  "userId":{"type": "string","description": "user ID here"}
+                }
+              }
+            }
+          }
+        },
+        "responses": { "default": { "description": "successful operation" } },
+        "security": [{ "BearerAuth": [] }]
+      }
+    },
+    "/follow/unfollow": {
+      "post": {
+        "tags": ["Follow"],
+        "summary": "unfollow a user",
+        "description": "This endpoint allows to unfollow other users.",
+        "operationId": "unfollowUser",
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json", "application/xml"],
+        "requestBody": {
+          "description": "Feilds for unfollowing User",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "followedId":{"type": "string","description": "id of the person to be unfollowed"},
+                  "userId":{"type": "string","description": "user ID here"}
+                }
+              }
+            }
+          }
+        },
+        "responses": { "default": { "description": "successful operation" } },
+        "security": [{ "BearerAuth": [] }]
+      }
+    },
+    "/follow/followers": {
+      "get": {
+        "tags": ["Follow"],
+        "summary": "followers list",
+        "description": "This endpoint allows to fetch user's followers",
+        "operationId": "followersList",
+        "produces": ["application/json", "application/xml"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the User",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          {
+            "name": "firstName",
+            "in": "query",
+            "description": "Search query to filter followers by first name",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+
+    "/follow/followings": {
+      "get": {
+        "tags": ["Follow"],
+        "summary": "followings list",
+        "description": "This endpoint allows to fetch user's followings",
+        "operationId": "followingsList",
+        "produces": ["application/json", "application/xml"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the User",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          {
+            "name": "firstName",
+            "in": "query",
+            "description": "Search query to filter followings by first name",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/user/home": {
+      "get": {
+        "tags": ["User"],
+        "summary": "home",
+        "description": "This endpoint allows for the information of user and suggested groups",
+        "operationId": "home",
+        "produces": ["application/json", "application/xml"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the User",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/exercise/create-exercise": {
+      "post": {
+        "tags": ["Exercise"],
+        "summary": "Add a new exercise",
+        "description": "This endpoint allows to add a new exercise.",
+        "operationId": "addexercise",
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json", "application/xml"],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "icon": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Icon of the exercise"
+                  },
+                  "demo": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "demo video of the exercise"
+                  },
+                  "body": {
+                    "type": "string",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": { "type": "string" },
+                        "description": { "type": "string" },
+                        "targetMuscle": { "type": "string" },
+                        "rest": { "type": "string" }
+                      }
+                    },
+                    "description": "Other data including name, description, targetMuscle, rest etc.",
+                    "example": "{'name': 'bench press', 'description': 'basic exercise for middle section of chest', 'targetMuscle': 'chest', 'rest' : '60s'}"
+                  }
+                },
+                "required": [
+                  "icon",
+                  "demo",
+                  "body"
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": { "default": { "description": "successful operation" } },
+        "security": [{ "BearerAuth": [] }]
+      }
+    },
+    "/exercise/get-all-exercise": {
+      "get": {
+        "tags": ["Exercise", "Desktop"],
+        "summary": "All exercise",
+        "description": "This endpoint allows for the listing of all exercise.",
+        "operationId": "getExercise",
+        "produces": ["application/json", "application/xml"],
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "description": "category of the exercise",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/exercise/get-all-exercise-category": {
+      "get": {
+        "tags": ["Exercise", "Desktop"],
+        "summary": "All exercise category",
+        "description": "This endpoint allows for the listing of all exercise categories.",
+        "operationId": "getExerciseCategories",
+        "produces": ["application/json", "application/xml"],
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/badge/create-badge": {
+      "post": {
+        "tags": ["Badge", "Desktop"],
+        "summary": "createBadge",
+        "description": "This endpoint allows you to create a Badge",
+        "operationId": "createBadge",
+        "produces": ["application/json", "application/xml"],
+        "requestBody": {
+          "description": "Feilds for creating badge",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name":{"type": "string","description": "name of badge"},
+                  "description":{"type": "string","description": "description of the badge"},
+                  "type":{"type": "string","description": "type of the badge"},
+                  "image":{"type": "string","description": "link of the uploaded picture of the badge"}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/badge/get-badge": {
+      "get": {
+        "tags": ["Badge"],
+        "summary": "get a badge",
+        "description": "This endpoint allows to get a badge",
+        "operationId": "getBadge",
+        "produces": ["application/json", "application/xml"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id of the badge",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/badge/get-all-badge": {
+      "get": {
+        "tags": ["Badge", "Desktop"],
+        "summary": "get all badge",
+        "description": "This endpoint allows to get all badge",
+        "operationId": "getAllBadge",
+        "produces": ["application/json", "application/xml"],
+      
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/badge/update-badge": {
+      "put": {
+        "tags": ["Badge"],
+        "summary": "Update badge",
+        "description": "This endpoint allows for the Update of badge.",
+        "operationId": "badgeUpdate",
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json", "application/xml"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the badge",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Feilds for updating badge",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  
+                }
+              }
+            }
+          }
+        },
+        "responses": { "default": { "description": "successful operation" } },
+        "security": [{ "BearerAuth": [] }]
+      }
+    },
+    "/badge/delete-badge": {
+      "delete": {
+        "tags": ["Badge"],
+        "summary": "deleteBadge",
+        "description": "This endpoint allows to delete badge.",
+        "operationId": "deleteBadge",
+        "produces": ["application/json", "application/xml"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the Badge",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        ],
+        
+        "responses": { "default": { "description": "successful operation" } },
+        "security": [{ "BearerAuth": [] }]
+      }
+    },
+"/challenge/create-challenge": {
+  "post": {
+    "tags": ["Challenge", "Desktop"],
+    "summary": "createChallenge",
+    "description": "This endpoint allows you to create a challenge",
+    "operationId": "createChallenge",
+    "produces": ["application/json", "application/xml"],
+    "requestBody": {
+      "description": "Fields for creating a challenge",
+      "required": true,
+      "content": {
+        "multipart/form-data": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the challenge"
+              },
+              "challengeCreator": {
+                "type": "string",
+                "description": "Name of the challenge creator"
+              },
+              "image": {
+                "type": "string",
+                "format": "binary",
+                "description": "Image file of the challenge"
+              },
+              "badgeCriteria": {
+                "type": "string",
+                "description": "Criteria for earning a badge"
+              },
+              "challengeStart": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Start date of the challenge"
+              },
+              "challengeEnd": {
+                "type": "string",
+                "format": "date-time",
+                "description": "End date of the challenge"
+              },
+              "type": {
+                "type": "string",
+                "description": "Type of the challenge"
+              },
+              "isFeatured": {
+                "type": "boolean",
+                "description": "Is the challenge featured",
+                "default": false
+              },
+              "days": {
+                "type": "array",
+                "description": "Active days of the challenge",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "dayName": {
+                      "type": "string",
+                      "description": "Name of the day"
+                    },
+                    "isActive": {
+                      "type": "boolean",
+                      "description": "Is the day active",
+                      "default": false
+                    }
+                  }
+                }
+              },
+              "user": {
+                "type": "array",
+                "description": "Users participating in the challenge",
+                "items": {
+                  "type": "string",
+                  "description": "User ID",
+                  "example": "60b6a23d8f1c4e3d1c8b4567"
+                }
+              },
+              "exercise": {
+                "type": "array",
+                "description": "Exercises included in the challenge",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "exerciseId": {
+                      "type": "string",
+                      "description": "ID of the exercise",
+                      "example": "60b6a23d8f1c4e3d1c8b4568"
+                    },
+                    "reps": {
+                      "type": "number",
+                      "description": "Number of repetitions"
+                    },
+                    "sets": {
+                      "type": "number",
+                      "description": "Number of sets"
+                    },
+                    "duration": {
+                      "type": "number",
+                      "description": "Duration of the exercise in seconds"
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "Type of the exercise (e.g., 'reps' or 'time based')"
+                    }
+                  }
+                }
+              },
+              "badge": {
+                "type": "string",
+                "description": "ID of the badge",
+                "example": "60b6a23d8f1c4e3d1c8b4569"
+              },
+              "group": {
+                "type": "string",
+                "description": "ID of the group",
+                "example": "6669a3448932aa1ea18af76a"
+              }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "default": {
+        "description": "successful operation"
+      }
+    },
+    "security": [
+      {
+        "BearerAuth": []
+      }
+    ]
+  }
+},
+  "/challenge/update-challenge": {
+    "put": {
+      "tags": ["Challenge"],
+      "summary": "Update challenge",
+      "description": "This endpoint allows for the Update of challenge.",
+      "operationId": "challengeUpdate",
+      "consumes": ["multipart/form-data"],
+      "produces": ["application/json", "application/xml"],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "query",
+          "description": "Id of the challenge",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "string"
+          }
+        }
+      ],
+      "requestBody": {
+        "description": "Feilds for updating challenge",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                
+              }
+            }
+          }
+        }
+      },
+      "responses": { "default": { "description": "successful operation" } },
+      "security": [{ "BearerAuth": [] }]
+    }
+  },
+  "/challenge/all-zeal-challenge": {
+    "get": {
+      "tags": ["Challenge", "Desktop"],
+      "summary": "get all challenge",
+      "description": "This endpoint allows to get all challenge",
+      "operationId": "getAllChallenge",
+      "produces": ["application/json", "application/xml"],
+      "parameters": [
+        {
+          "name": "query",
+          "in": "query",
+          "description": "search challenge name",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "string"
+          }
+        },
+        {
+          "name": "badge",
+          "in": "query",
+          "description": "filter badge name",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "string"
+          }
+        },
+        {
+          "name": "page",
+          "in": "query",
+          "description": "page number",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "string"
+          }
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "description": "limit of data",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "string"
+          }
+        }
+      ],
+      "responses": {
+        "default": {
+          "description": "successful operation"
+        }
+      },
+      "security": [
+        {
+          "BearerAuth": []
+        }
+      ]
+    }
+  },
+  "/challenge/GetFriendsChallenges": {
+    "get": {
+      "tags": ["Challenge"],
+      "summary": "get all friends challenge",
+      "description": "This endpoint allows to get all friends challenge",
+      "operationId": "getAllFriendsChallenge",
+      "produces": ["application/json", "application/xml"],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "query",
+          "description": "id of the user",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "string"
+          }
+        }
+      ],
+      "responses": {
+        "default": {
+          "description": "successful operation"
+        }
+      },
+      "security": [
+        {
+          "BearerAuth": []
+        }
+      ]
+    }
+  },
+  "/challenge/getAllCurrentChallenges": {
+    "get": {
+      "tags": ["Challenge"],
+      "summary": "get Users All Current Challenges",
+      "description": "This endpoint allows to get Users All Current Challenges",
+      "operationId": "getUsersAllCurrentChallenges",
+      "produces": ["application/json", "application/xml"],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "query",
+          "description": "id of the user",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "string"
+          }
+        }
+      ],
+      "responses": {
+        "default": {
+          "description": "successful operation"
+        }
+      },
+      "security": [
+        {
+          "BearerAuth": []
+        }
+      ]
+    }
+  },
+  "/challenge/GetCommunityChallenges": {
+    "get": {
+      "tags": ["Challenge"],
+      "summary": "get all community challenge",
+      "description": "This endpoint allows to get all community challenge",
+      "operationId": "getAllCommunityChallenge",
+      "produces": ["application/json", "application/xml"],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "query",
+          "description": "id of the user",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "string"
+          }
+        }
+      ],
+      "responses": {
+        "default": {
+          "description": "successful operation"
+        }
+      },
+      "security": [
+        {
+          "BearerAuth": []
+        }
+      ]
+    }
+  },
+  "/challenge/get-challenges-for-community": {
+    "get": {
+      "tags": ["Challenge"],
+      "summary": "get specific community challenges",
+      "description": "This endpoint allows to get specific community challenge",
+      "operationId": "getSpecificCommunityChallenge",
+      "produces": ["application/json", "application/xml"],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "query",
+          "description": "id of the community",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "string"
+          }
+        }
+      ],
+      "responses": {
+        "default": {
+          "description": "successful operation"
+        }
+      },
+      "security": [
+        {
+          "BearerAuth": []
+        }
+      ]
+    }
+  },
+  "/challenge/get-all-featured-challenges": {
+    "get": {
+      "tags": ["Challenge"],
+      "summary": "get all featured challenges",
+      "description": "This endpoint allows to get all featured challenge",
+      "operationId": "getAllFeaturedChallenges",
+      "produces": ["application/json", "application/xml"],
+    
+      "responses": {
+        "default": {
+          "description": "successful operation"
+        }
+      },
+      "security": [
+        {
+          "BearerAuth": []
+        }
+      ]
+    }
+  },
+  "/challenge/get-popular-challenge": {
+    "get": {
+      "tags": ["Challenge"],
+      "summary": "get popular challenges",
+      "description": "This endpoint allows to get all popular challenge",
+      "operationId": "getAllPopularChallenges",
+      "produces": ["application/json", "application/xml"],
+    
+      "responses": {
+        "default": {
+          "description": "successful operation"
+        }
+      },
+      "security": [
+        {
+          "BearerAuth": []
+        }
+      ]
+    }
+  },
+  "/challenge/get-user-created-challenges": {
+    "get": {
+      "tags": ["Challenge"],
+      "summary": "get user created challenges",
+      "description": "This endpoint allows to get user created challenges",
+      "operationId": "getUserCreatedChallenges",
+      "produces": ["application/json", "application/xml"],
+    "parameters": [
+        {
+          "name": "id",
+          "in": "query",
+          "description": "Id of the user",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "string"
+          }
+        }
+      ],
+      "responses": {
+        "default": {
+          "description": "successful operation"
+        }
+      },
+      "security": [
+        {
+          "BearerAuth": []
+        }
+      ]
+    }
+  },
+  "/challenge/delete-challenge": {
+    "delete": {
+      "tags": ["Challenge"],
+      "summary": "delete challenge",
+      "description": "This endpoint allows to delete challenge.",
+      "operationId": "deleteChallenge",
+      "produces": ["application/json", "application/xml"],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "query",
+          "description": "Id of the Challenge",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "string"
+          }
+        }
+      ],
+      
+      "responses": { "default": { "description": "successful operation" } },
+      "security": [{ "BearerAuth": [] }]
+    }
+  },
+  "/challenge/join-challenge": {
+    "post": {
+      "tags": ["Challenge"],
+      "summary": "join challenge",
+      "description": "This endpoint allows you to join a challenge",
+      "operationId": "joinChallenge",
+      "produces": ["application/json", "application/xml"],
+      "requestBody": {
+        "description": "Feilds for joining challenge",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId":{"type": "string","description": "ID of the user"},
+                "challengeId":{"type": "string","description": "ID of the chellenge"}
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "default": {
+          "description": "successful operation"
+        }
+      },
+      "security": [
+        {
+          "BearerAuth": []
+        }
+      ]
+    }
+  },
+  "/badge/award-badge": {
+    "post": {
+      "tags": ["Badge"],
+      "summary": "award a badge",
+      "description": "This endpoint allows you to award a badge to the user",
+      "operationId": "awardBadge",
+      "produces": ["application/json", "application/xml"],
+      "requestBody": {
+        "description": "Feilds for awarding badge",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId":{"type": "string","description": "ID of the user"},
+                "badgeId":{"type": "string","description": "ID of the badge"}
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "default": {
+          "description": "successful operation"
+        }
+      },
+      "security": [
+        {
+          "BearerAuth": []
+        }
+      ]
+    }
+  },
+  "/progress/update-progress": {
+    "put": {
+      "tags": ["Progress"],
+      "summary": "Update progress",
+      "description": "This endpoint allows for the Update of progress.",
+      "operationId": "progressUpdate",
+      "consumes": ["multipart/form-data"],
+      "produces": ["application/json", "application/xml"],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "query",
+          "description": "Id of the user",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "string"
+          }
+        }
+      ],
+      "requestBody": {
+        "description": "Feilds for updating challenge",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                
+              }
+            }
+          }
+        }
+      },
+      "responses": { "default": { "description": "successful operation" } },
+      "security": [{ "BearerAuth": [] }]
+    }
+  },
+  "/progress/GetUserProgress": {
+    "get": {
+      "tags": ["Progress"],
+      "summary": "Get User Progress",
+      "description": "This endpoint allows to get user progress",
+      "operationId": "GetUserProgress",
+      "produces": ["application/json", "application/xml"],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "query",
+          "description": "id of the user",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "string"
+          }
+        },
+        {
+          "name": "challengeId",
+          "in": "query",
+          "description": "id of the challenge",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "string"
+          }
+        }
+      ],
+      "responses": {
+        "default": {
+          "description": "successful operation"
+        }
+      },
+      "security": [
+        {
+          "BearerAuth": []
+        }
+      ]
+    }
+  },
+  "/progress/GetUserExerciseLog": {
+    "get": {
+      "tags": ["Progress"],
+      "summary": "Get User Exercise Log",
+      "description": "This endpoint allows to get user Exercise Log",
+      "operationId": "GetUserExerciseLog",
+      "produces": ["application/json", "application/xml"],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "query",
+          "description": "id of the user",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "string"
+          }
+        },
+        {
+          "name": "challengeId",
+          "in": "query",
+          "description": "id of the challenge",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "string"
+          }
+        }
+      ],
+      "responses": {
+        "default": {
+          "description": "successful operation"
+        }
+      },
+      "security": [
+        {
+          "BearerAuth": []
+        }
+      ]
+    }
+  },
+  "/progress/get-challenge-history": {
+    "get": {
+      "tags": ["Progress"],
+      "summary": "Get User challenge history",
+      "description": "This endpoint allows to get user challenge history",
+      "operationId": "challengeHistory",
+      "produces": ["application/json", "application/xml"],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "query",
+          "description": "id of the user",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "string"
+          }
+        },
+        {
+          "name": "dateFromFrontend",
+          "in": "query",
+          "description": "dateFromFrontend",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "string"
+          }
+        }
+      ],
+      "responses": {
+        "default": {
+          "description": "successful operation"
+        }
+      },
+      "security": [
+        {
+          "BearerAuth": []
+        }
+      ]
+    }
+  },
+  "/progress/get-leaderboard": {
+    "get": {
+      "tags": ["Progress"],
+      "summary": "Get User challenge leaderboard",
+      "description": "This endpoint allows to get challenge leaderboard",
+      "operationId": "challengeLeaderboard",
+      "produces": ["application/json", "application/xml"],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "query",
+          "description": "id of the challenge",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "string"
+          }
+        }
+       
+      ],
+      "responses": {
+        "default": {
+          "description": "successful operation"
+        }
+      },
+      "security": [
+        {
+          "BearerAuth": []
+        }
+      ]
+    }
+  },
+  "/progress/stats": {
+    "get": {
+      "tags": ["Progress"],
+      "summary": "Get User Stats",
+      "description": "This endpoint allows to get User Stats",
+      "operationId": "GetUserStats",
+      "produces": ["application/json", "application/xml"],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "query",
+          "description": "id of the User",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "string"
+          }
+        }
+       
+      ],
+      "responses": {
+        "default": {
+          "description": "successful operation"
+        }
+      },
+      "security": [
+        {
+          "BearerAuth": []
+        }
+      ]
+    }
+  },
+  "/challenge/get-challenge-details": {
+    "get": {
+      "tags": ["Challenge", "Desktop"],
+      "summary": "Get challenge details",
+      "description": "This endpoint allows to get challenge details",
+      "operationId": "challengeDetails",
+      "produces": ["application/json", "application/xml"],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "query",
+          "description": "id of the challenge",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "string"
+          }
+        }
+      ],
+      "responses": {
+        "default": {
+          "description": "successful operation"
+        }
+      },
+      "security": [
+        {
+          "BearerAuth": []
+        }
+      ]
+    }
+  },
+  "/challenge/retrieve-challenge": {
+    "get": {
+      "tags": ["Challenge"],
+      "summary": "retrieve-challenge",
+      "description": "This endpoint allows to retrieve user's challenge",
+      "operationId": "retrieveChallenge",
+      "produces": ["application/json", "application/xml"],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "query",
+          "description": "id of the user",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "string"
+          }
+        },
+        {
+          "name": "challengeId",
+          "in": "query",
+          "description": "id of the challenge",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "string"
+          }
+        }
+      ],
+      "responses": {
+        "default": {
+          "description": "successful operation"
+        }
+      },
+      "security": [
+        {
+          "BearerAuth": []
+        }
+      ]
+    }
+  },
+  "/auth/sendNotification": {
+    "post": {
+      "tags": ["Auth"],
+      "summary": "Send Notifications",
+      "description": "This endpoint allows you to send notification",
+      "operationId": "sendNotifications",
+      "produces": ["application/json", "application/xml"],
+      "requestBody": {
+        "description": "Fields for sending notifications",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "description": "name of challenge"
+                },
+                "body ": {
+                  "type": "string",
+                  "description": "name of challenge creator"
+                }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "default": {
+          "description": "successful operation"
+        }
+      },
+      "security": [
+        {
+          "BearerAuth": []
+        }
+      ]
+    }
+  }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "definitions": {
+    "ApiResponse": {
+      "type": "object",
+      "properties": {
+        "code": { "type": "integer", "format": "int32" },
+        "type": { "type": "string" },
+        "message": { "type": "string" }
+      }
+    },
+    "Pet": {
+      "type": "object",
+      "required": ["name", "photoUrls"],
+      "properties": {
+        "id": { "type": "integer", "format": "int64" },
+        "category": { "$ref": "#/definitions/Category" },
+        "name": { "type": "string", "example": "doggie" },
+        "photoUrls": {
+          "type": "array",
+          "xml": { "wrapped": true },
+          "items": { "type": "string", "xml": { "name": "photoUrl" } }
+        },
+        "tags": {
+          "type": "array",
+          "xml": { "wrapped": true },
+          "items": { "xml": { "name": "tag" }, "$ref": "#/definitions/Tag" }
+        },
+        "status": {
+          "type": "string",
+          "description": "pet status in the store",
+          "enum": ["available", "pending", "sold"]
+        }
+      },
+      "xml": { "name": "Pet" }
+    },
+    "Tag": {
+      "type": "object",
+      "properties": { "id": { "type": "integer", "format": "int64" }, "name": { "type": "string" } },
+      "xml": { "name": "Tag" }
+    },
+    "Order": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "integer", "format": "int64" },
+        "petId": { "type": "integer", "format": "int64" },
+        "quantity": { "type": "integer", "format": "int32" },
+        "shipDate": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "description": "Order Status", "enum": ["placed", "approved", "delivered"] },
+        "complete": { "type": "boolean" }
+      },
+      "xml": { "name": "Order" }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "integer", "format": "int64" },
+        "username": { "type": "string" },
+        "firstName": { "type": "string" },
+        "lastName": { "type": "string" },
+        "email": { "type": "string" },
+        "password": { "type": "string" },
+        "phone": { "type": "string" },
+        "userStatus": { "type": "integer", "format": "int32", "description": "User Status" }
+      },
+      "xml": { "name": "User" }
+    },
+    "Dealership": {
+      "type": "object",
+      "properties": {
+        "firstName": { "type": "string" },
+        "lastName": { "type": "string" },
+        "email": { "type": "string" },
+        "password": { "type": "string" },
+        "phoneNumber": { "type": "string" },
+        "name": { "type": "string" },
+        "state": { "type": "string" },
+        "city": { "type": "string" },
+        "registrationNumber": { "type": "string" }
+      },
+      "xml": { "name": "Dealership" }
+    },
+    "Zeal": {
+      "type": "object",
+      "properties": {
+        "firstName": { "type": "string" },
+        "lastName": { "type": "string" },
+        "email": { "type": "string" },
+        "age": { "type": "string" },
+        "password": { "type": "string" },
+        "fcmToken": { "type": "string" }
+
+      },
+      "xml": { "name": "Zeal" }
+    },
+    "ZealLogin": {
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "password": { "type": "string" },
+        "fcmToken": { "type": "string" }
+        
+      },
+      "xml": { "name": "Zeal" }
+    },
+    "Car": {
+      "type": "object",
+      "properties": {
+        "vin": { "type": "string" },
+        "specs": { "type": "object" },
+        "description": { "type": "string" },
+        "owner": { "type": "string" }
+      },
+      "xml": { "name": "Dealership" }
+    }
+  },
+  "externalDocs": { "description": "Find out more about Swagger", "url": "http://swagger.io" }
+}
